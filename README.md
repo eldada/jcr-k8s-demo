@@ -11,7 +11,7 @@ using the official [JCR Helm Chart](https://hub.helm.sh/charts/jfrog/artifactory
 
 ## Steps
 
-### Deploy JCR (assuming helm v3 here)
+### Deploy JCR (using helm v3)
 Use Helm (v3) to add the JFrog repository and deploy with the official JCR helm chart.
 ```bash
 helm repo add jfrog https://charts.jfrog.io
@@ -60,3 +60,14 @@ docker tag my-secret-app:0.0.1 ${JCR_IP}/docker/my-secret-app:0.0.1
 docker push ${JCR_IP}/docker/my-secret-app:0.0.1
 ```
 
+### Remove JCR (using helm v3)
+Once done, you can easily remove JCR with helm
+```bash
+helm uninstall jcr
+
+# Remove left over PVCs if neede
+kubectl get pvc
+
+kubectl delete pvc ...
+
+```
