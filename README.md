@@ -12,6 +12,7 @@ using the official [JCR Helm Chart](https://hub.helm.sh/charts/jfrog/artifactory
 ## Steps
 
 ### Deploy JCR (assuming helm v3 here)
+Use Helm (v3) to add the JFrog repository and deploy with the official JCR helm chart.
 ```bash
 helm repo add jfrog https://charts.jfrog.io
 helm install jcr jfrog/artifactory-jcr
@@ -19,15 +20,21 @@ helm install jcr jfrog/artifactory-jcr
 ```
 
 ### Setup JCR
+Get the JCR setup as a Docker registry
+
 1. [Option 1] Get JCR IP from load balancer if provisioned
 ```bash
+# NOTE: It might take a few minutes before the public IP is ready
 export JCR_IP=$(kubectl get service/jcr-artifactory-nginx -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+echo ${JCR_IP}
+
 ```
 
 2. [Option 2] Use port forward to the service and access on localhost
 ```bash
 kubectl port-forward jcr-artifactory-0 8081:8081 &
 export JCR_IP=localhost
+
 ```
 
 3. Browse to http://${JCR_IP} and follow on screen onboarding wizard. Create a Docker registry
@@ -52,3 +59,4 @@ docker tag my-secret-app:0.0.1 ${JCR_IP}/docker/my-secret-app:0.0.1
 ```bash
 docker push ${JCR_IP}/docker/my-secret-app:0.0.1
 ```
+
