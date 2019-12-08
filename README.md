@@ -65,7 +65,7 @@ Once done, you can easily remove JCR with helm
 ```bash
 helm uninstall jcr
 
-# Remove left over PVCs if neede
+# Remove left over PVCs if needed
 kubectl get pvc
 
 kubectl delete pvc ...
